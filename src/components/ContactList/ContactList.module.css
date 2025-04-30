@@ -1,0 +1,13 @@
+.itemBorder {
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 5px;
+  width: 250px;
+}
+
+.listContact {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  list-style-type: none;
+}

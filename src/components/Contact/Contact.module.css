@@ -1,0 +1,15 @@
+.contactWrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.btn {
+  cursor: pointer;
+}
