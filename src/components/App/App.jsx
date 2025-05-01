@@ -21,6 +21,12 @@ export default function App() {
     });
   };
 
+  const deleteContact = (contactId) => {
+    setContacts((prevContacts) => {
+      return prevContacts.filter((contact) => contact.id !== contactId);
+    });
+  };
+
   const filterContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -30,7 +36,7 @@ export default function App() {
       <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
-      <ContactList contactsList={filterContacts} />
+      <ContactList contactsList={filterContacts} onDelete={deleteContact} />
     </div>
   );
 }
