@@ -15,6 +15,12 @@ export default function App() {
 
   const [filter, setFilter] = useState("");
 
+  const addContact = (newContact) => {
+    setContacts((prevContact) => {
+      return [...prevContact, newContact];
+    });
+  };
+
   const filterContacts = contacts.filter((contact) =>
     contact.name.toLowerCase().includes(filter.toLowerCase())
   );
@@ -22,7 +28,7 @@ export default function App() {
   return (
     <div>
       <h1>Phonebook</h1>
-      <ContactForm />
+      <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
       <ContactList contactsList={filterContacts} />
     </div>

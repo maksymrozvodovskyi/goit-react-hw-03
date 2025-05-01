@@ -3,25 +3,31 @@ import css from "./ContactForm.module.css";
 import { Field, Form, Formik, ErrorMessage } from "formik";
 import { useId } from "react";
 import * as Yup from "yup";
+import "yup-phone-lite";
+import { nanoid } from "nanoid";
 
 const initialValues = {
-  username: "",
+  name: "",
   number: "",
 };
 
 const FeedbackSchema = Yup.object().shape({
-  username: Yup.string()
+  name: Yup.string()
     .min(3, "Too short")
     .max(50, "Too long")
     .required("Required"),
   number: Yup.string()
-    .min(3, "Too short")
-    .max(50, "Too long")
+    .phone("UA", "Please enter a valid phone number")
     .required("Required"),
 });
 
-export default function ContactForm() {
+export default function ContactForm({ onAdd }) {
   const handleSubmit = (values, actions) => {
+    onAdd({
+      name: values.name,
+      number: values.number,
+      id: nanoid(),
+    });
     actions.resetForm();
   };
 
@@ -39,11 +45,11 @@ export default function ContactForm() {
           <label htmlFor={nameFieldId}>Name</label>
           <Field
             type="text"
-            name="username"
+            name="name"
             id={nameFieldId}
             className={css.fieldwrap}
           />
-          <ErrorMessage name="username" component="span" />
+          <ErrorMessage name="name" component="span" className={css.error} />
 
           <label htmlFor={numberFieldId}>Number</label>
           <Field
@@ -52,7 +58,7 @@ export default function ContactForm() {
             id={numberFieldId}
             className={css.fieldwrap}
           />
-          <ErrorMessage name="number" component="span" />
+          <ErrorMessage name="number" component="span" className={css.error} />
         </div>
 
         <button type="submit" className={css.btn}>
