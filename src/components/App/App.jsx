@@ -14,7 +14,7 @@ export default function App() {
       return JSON.parse(savedContacts);
     }
 
-    return { id: 0, name: 0, number: 0 };
+    return [];
   });
 
   const [filter, setFilter] = useState("");
@@ -34,7 +34,7 @@ export default function App() {
 
   const visibileContacts = useMemo(() => {
     return contacts.filter((contact) =>
-      contact.name.toLowerCase().includes(filter.toLowerCase())
+      contact.name.toLowerCase().includes(debouncedInputValue.toLowerCase())
     );
   }, [debouncedInputValue, contacts]);
 
