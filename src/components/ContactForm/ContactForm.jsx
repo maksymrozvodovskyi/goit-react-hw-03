@@ -17,7 +17,7 @@ const FeedbackSchema = Yup.object().shape({
     .max(50, "Too long")
     .required("Required"),
   number: Yup.string()
-    .phone("UA", "Please enter a valid phone number")
+    .phone("UA", "Please enter a valid ukrainian phone number")
     .required("Required"),
 });
 
