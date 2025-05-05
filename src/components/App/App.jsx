@@ -1,6 +1,6 @@
 import css from "./App.module.css";
-import { useState } from "react";
-import { useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useDebounce } from "use-debounce";
 
 import ContactForm from "../ContactForm/ContactForm";
 import SearchBox from "../SearchBox/SearchBox";
@@ -16,6 +16,7 @@ export default function App() {
   });
 
   const [filter, setFilter] = useState("");
+  const [debouncedInputValue] = useDebounce(filter, 300);
 
   const addContact = (newContact) => {
     setContacts((prevContact) => {
@@ -29,9 +30,11 @@ export default function App() {
     });
   };
 
-  const filterContacts = contacts.filter((contact) =>
-    contact.name.toLowerCase().includes(filter.toLowerCase())
-  );
+  const visibileContacts = useMemo(() => {
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }, [debouncedInputValue, contacts]);
 
   useEffect(() => {
     window.localStorage.setItem("contacts", JSON.stringify(contacts));
@@ -42,7 +45,7 @@ export default function App() {
       <h1>Phonebook</h1>
       <ContactForm onAdd={addContact} />
       <SearchBox value={filter} onFilter={setFilter} />
-      <ContactList contactsList={filterContacts} onDelete={deleteContact} />
+      <ContactList contactsList={visibileContacts} onDelete={deleteContact} />
     </div>
   );
 }
