@@ -13,6 +13,8 @@ export default function App() {
     if (savedContacts !== null) {
       return JSON.parse(savedContacts);
     }
+
+    return { id: 0, name: 0, number: 0 };
   });
 
   const [filter, setFilter] = useState("");
